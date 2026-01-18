@@ -52,11 +52,10 @@ async fn handle_connection(
 
         match parse_command(line.trim()) {
             Some(ClientCommand::Join(name)) => {
-                state
-                    .lock()
-                    .await
-                    .join(name.clone(), tx.clone())
-                    .map_err(tokio::io::Error::other)?;
+                if let Err(err) = state.lock().await.join(name.clone(), tx.clone()) {
+                    let _ = tx.send(ServerMessage::Error(err)).await;
+                    return Ok(());
+                }
 
                 username = Some(name);
             }

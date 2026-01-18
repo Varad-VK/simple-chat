@@ -12,6 +12,7 @@ pub enum ClientCommand {
 #[derive(Debug, Clone)]
 pub enum ServerMessage {
     Message { from: Username, body: String },
+    Error(String),
 }
 
 pub fn parse_command(line: &str) -> Option<ClientCommand> {
@@ -32,6 +33,10 @@ impl fmt::Display for ServerMessage {
         match self {
             ServerMessage::Message { from, body } => {
                 write!(f, "MSG {from}: {body}")
+            }
+
+            ServerMessage::Error(err) => {
+                write!(f, "ERR {err}")
             }
         }
     }
