@@ -1,5 +1,47 @@
 # Simple Chat
 
+## How to Run
+
+### 1. Start the Server
+
+From the project root, run:
+
+```bash
+cargo run -- server 127.0.0.1:9000
+```
+
+### 2. Start a client
+
+```bash
+cargo run -- client 127.0.0.1:9000 varad
+
+cargo run -- client 127.0.0.1:9000 rohan
+```
+
+### 3. Send message using 'send'
+
+```bash
+send hello
+```
+
+## Project Structure
+```bash
+simple-chat/
+├── Cargo.toml
+├── src/
+│   ├── main.rs        # Binary entrypoint (CLI)
+│   ├── lib.rs         # Library root
+│   ├── protocol.rs    # Wire protocol + parsing
+│   ├── state.rs       # ChatState (users, broadcast)
+│   ├── server.rs      # Async server
+│   └── client.rs      # Async CLI client
+└── tests/
+    └── state_tests.rs # unit tests
+    └── integration_chat.rs # integration tests
+```
+
+
+
 ## Summary
 
 You have been tasked with writing a simple asynchronous chat server and CLI
